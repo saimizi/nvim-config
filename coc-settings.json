@@ -4,5 +4,40 @@
         "vim"
     ],
     "cSpell.enabled": true,
-    "cSpell.language": "en"
+    "cSpell.language": "en",
+    "cSpell.words": [],
+    "cSpell.ignoreWords": [],
+    "cSpell.allowCompoundWords": false,
+    "cSpell.enabledLanguageIds": [
+        "vim",
+        "asciidoc",
+        "css",
+        "git-commit",
+        "handlebars",
+        "html",
+        "json",
+        "jsonc",
+        "latex",
+        "less",
+        "markdown",
+        "plaintext",
+        "text",
+        "yaml",
+        "yml",
+        "rust"
+    ],
+    "languageserver": {
+        "nix": {
+            "command": "nil",
+            "filetypes": [
+                "nix"
+            ],
+            "rootPatterns": [
+                "flake.nix",
+                "default.nix",
+                "shell.nix",
+                ".git/"
+            ]
+        }
+    }
 }
