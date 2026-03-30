@@ -21,6 +21,11 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.wildmode = "longest,list"
 vim.opt.tw = 80
+vim.opt.hidden = true
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.encoding = "utf-8"
+vim.opt.signcolumn = "yes"
 
 
 vim.cmd("colorscheme desert")
