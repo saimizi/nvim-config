@@ -26,6 +26,7 @@ vim.opt.tw = 80
 vim.opt.cursorline = true
 vim.opt.termguicolors = true
 
+vim.cmd("colorscheme desert")
 
 vim.opt.mouse = "a"
 
