@@ -1,0 +1,8 @@
+{
+    "snippets.ultisnips.pythonPrompt": false,
+    "Lua.diagnostics.globals": [
+        "vim"
+    ],
+    "cSpell.enabled": true,
+    "cSpell.language": "en"
+}
