@@ -3,30 +3,29 @@
 --------------------------------------------------
 -- Basic options
 --------------------------------------------------
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.mouse = "a"
-vim.opt.termguicolors = true
-
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
-vim.opt.smartindent = true
-
-vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.incsearch = true
-
 vim.opt.updatetime = 300
 vim.opt.signcolumn = "yes"
-
-vim.opt.hlsearch = false
 vim.opt.shiftwidth = 4
-vim.opt.tw = 80
 vim.opt.cursorline = true
 vim.opt.termguicolors = true
+vim.opt.showmatch = true
+vim.opt.ignorecase = true
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.wildmode = "longest,list"
+vim.opt.tw = 80
+
 
 vim.cmd("colorscheme desert")
+vim.cmd("filetype plugin indent on")
+vim.cmd("syntax on")
 
 vim.opt.mouse = "a"
 
@@ -89,8 +88,11 @@ vim.cmd([[
 --------------------------------------------------
 -- Nvim-tree (file explorer)
 --------------------------------------------------
-require("nvim-tree").setup({})
-map("n", "<leader>e", ":NvimTreeToggle<CR>")
+require("nvim-tree").setup({
+    hijack_directories = { enable = false },
+    hijack_netrw = false,
+})
+map("n", "<leader>t", ":NvimTreeToggle<CR>", { silent = true })
 
 --------------------------------------------------
 -- Coc.nvim keymaps
@@ -98,7 +100,7 @@ map("n", "<leader>e", ":NvimTreeToggle<CR>")
 map("n", "gd", "<Plug>(coc-definition)", { silent = true })
 map("n", "gy", "<Plug>(coc-definition)", { silent = true })
 map("n", "gr", "<Plug>(coc-references)", { silent = true })
-map("n", "gi", "<Plug>(coc-implementation)", { silent = true })
+map("n", "gI", "<Plug>(coc-implementation)", { silent = true })
 map("n", "K", ":call CocActionAsync('doHover')<CR>", { silent = true })
 map("n", "<leader>f", "<Plug>(coc-format)", { silent = true })
 map("v", "<leader>f", "<Plug>(coc-format-selected)", { silent = true })
