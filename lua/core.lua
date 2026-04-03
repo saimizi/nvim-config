@@ -86,6 +86,12 @@ vim.cmd([[
   " Git
   Plug 'tpope/vim-fugitive'
 
+  " Cscope
+  " Optional pickers
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'ibhagwan/fzf-lua'
+  Plug 'dhananjaylatkar/cscope_maps.nvim'
+
   call plug#end()
 ]])
 
@@ -126,3 +132,63 @@ map("n", "<leader>gt", ":CocCommand git.toggleGutters<CR>", { silent = true })
 -- Completion
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 map("i", "<CR>", [[coc#pum#visible() ? coc#pum#confirm() : "\<CR>"]], { expr = true })
+
+-- Cscope
+require('cscope_maps').setup({})
+
+-- Auto-load cscope database:
+-- 1. Prefer ./cscope.out
+-- 2. Fallback to $CSCOPE_DB
+local function load_cscope_db()
+  local local_db = vim.fn.getcwd() .. "/cscope.out"
+  local env_db = vim.env.CSCOPE_DB
+
+  -- Case 1: ./cscope.out exists
+  if vim.fn.filereadable(local_db) == 1 then
+    vim.notify("cscope: loading local DB → " .. local_db)
+    vim.cmd("Cs db add " .. local_db)
+    return
+  end
+
+  -- Case 2: $CSCOPE_DB exists and is readable
+  if env_db and vim.fn.filereadable(env_db) == 1 then
+    vim.notify("cscope: loading CSCOPE_DB → " .. env_db)
+    vim.cmd("Cs db add " .. env_db)
+    return
+  end
+
+  -- Case 3: nothing found
+  vim.notify("cscope: no database found", vim.log.levels.WARN)
+end
+
+-- Run automatically when opening Neovim
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = load_cscope_db,
+})
+
+-- Cscope shortcuts (leader + c + key)
+map('n', '<C-\\>s', ':Cs find f <C-R><C-W><CR>', { desc = 'Find symbol' })
+map('n', '<C-\\>g', ':Cs find g <C-R><C-W><CR>', { desc = 'Find definition' })
+map('n', '<C-\\>t', ':Cs find t <C-R><C-W><CR>', { desc = 'Find text' })
+map('n', '<C-\\>c', ':Cs find c <C-R><C-W><CR>', { desc = 'Find callers' })
+map('n', '<C-\\>d', ':Cs find d <C-R><C-W><CR>', { desc = 'Find callees' })
+map('n', '<C-\\>f', ':Cs find e <C-R><C-W><CR>', { desc = 'Find files' })
+map('n', '<C-\\>i', ':Cs find i <C-R><C-W><CR>', { desc = 'Find includes' })
+
+-- Database management
+map('n', '<C-\\>B', ':Cs db build<CR>', { desc = 'Build cscope DB' })
+map('n', '<C-\\>A', ':Cs db add ', { desc = 'Add cscope.out' })
+
+-- Jump to next quickfix item
+vim.keymap.set('n', '<C-j>', function()
+  vim.cmd('cnext')
+  vim.cmd('copen')
+end, { desc = 'Quickfix: next item' })
+
+-- Jump to previous quickfix item
+vim.keymap.set('n', '<C-k>', function()
+  vim.cmd('cprev')
+  vim.cmd('copen')
+end, { desc = 'Quickfix: previous item' })
+
+
